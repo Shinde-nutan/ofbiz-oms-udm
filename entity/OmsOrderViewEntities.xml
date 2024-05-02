@@ -1056,19 +1056,23 @@ under the License.
             <key-map field-name="orderItemSeqId"/>
             <key-map field-name="orderId"/>
         </member-entity>
-        <member-entity entity-alias="OFH" entity-name="co.hotwax.integration.order.OrderFulfillmentHistory" join-from-alias="SOV" join-optional="true">
+        <member-entity entity-alias="OFH" entity-name="co.hotwax.integration.order.OrderFulfillmentHistory" join-from-alias="OI" join-optional="true">
             <key-map field-name="orderId"/>
             <key-map field-name="orderItemSeqId"/>
         </member-entity>
-        <alias-all entity-alias="SOV"/>
+        <alias entity-alias="OI" name="orderId"/>
+        <alias entity-alias="OI" name="orderItemSeqId"/>
+        <alias-all entity-alias="SOV">
+            <exclude field="orderId"/>
+            <exclude field="orderItemSeqId"/>
+        </alias-all>
         <entity-condition>
-            <!-- Here we are preparing the Shipment Item for eligible Order that are not sent to the external system.
-             So we need to add the below condition same as FulfilledOrderItemsSyncQueue view. -->
-<!--            <econdition entity-alias="SOV" field-name="roleTypeId" operator="equals" value="BILL_TO_CUSTOMER"/>-->
+            <econditions combine="and">
             <econdition entity-alias="OFH" field-name="orderId" operator="equals" value=""/>
             <econditions combine="or">
                 <econdition entity-alias="OI" field-name="quantity" operator="greater" to-entity-alias="OI" to-field-name="cancelQuantity"/>
                 <econdition entity-alias="OI" field-name="cancelQuantity" operator="equals" value=""/>
+            </econditions>
             </econditions>
         </entity-condition>
     </view-entity>
@@ -1076,23 +1080,21 @@ under the License.
     <view-entity entity-name="FulfilledOrderItemsView" package="co.hotwax.warehouse">
         <member-entity entity-alias="OI" entity-name="org.apache.ofbiz.order.order.OrderItem"/>
         <member-entity entity-alias="OISDV" entity-name="co.hotwax.warehouse.OrderItemAndShipmentDetailsView" sub-select="true" join-from-alias="OI">
-            <key-map field-name="orderItemSeqId"/>
-            <key-map field-name="orderId"/>
-        </member-entity>
-        <member-entity entity-alias="OFH" entity-name="co.hotwax.integration.order.OrderFulfillmentHistory" join-from-alias="OISDV" join-optional="true">
             <key-map field-name="orderId"/>
             <key-map field-name="orderItemSeqId"/>
         </member-entity>
-        <alias-all entity-alias="OISDV"/>
+        <member-entity entity-alias="OFH" entity-name="co.hotwax.integration.order.OrderFulfillmentHistory" join-from-alias="OI" join-optional="true">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </member-entity>
+        <alias entity-alias="OI" name="orderId"/>
+        <alias entity-alias="OI" name="orderItemSeqId"/>
+        <alias-all entity-alias="OISDV">
+            <exclude field="orderId"/>
+            <exclude field="orderItemSeqId"/>
+        </alias-all>
         <entity-condition>
-            <!-- Here we are preparing the Shipment Item for eligible Order that are not sent to the external system.
-             So we need to add the below condition same as FulfilledOrderItemsSyncQueue view. -->
-            <!--            <econdition entity-alias="SOV" field-name="roleTypeId" operator="equals" value="BILL_TO_CUSTOMER"/>-->
             <econdition entity-alias="OFH" field-name="orderId" operator="equals" value=""/>
-            <econditions combine="or">
-                <econdition entity-alias="OI" field-name="quantity" operator="greater" to-entity-alias="OI" to-field-name="cancelQuantity"/>
-                <econdition entity-alias="OI" field-name="cancelQuantity" operator="equals" value=""/>
-            </econditions>
         </entity-condition>
     </view-entity>
 </entities>
