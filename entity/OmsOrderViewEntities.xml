@@ -1064,7 +1064,7 @@ under the License.
             <!-- Here we are preparing the Shipment Item for eligible Order that are not sent to the external system.
              So we need to add the below condition same as FulfilledOrderItemsSyncQueue view. -->
 <!--            <econdition entity-alias="SOV" field-name="roleTypeId" operator="equals" value="BILL_TO_CUSTOMER"/>-->
-<!--            <econdition entity-alias="OFH" field-name="orderId" operator="equals" value=""/>-->
+            <econdition entity-alias="OFH" field-name="orderId" operator="equals" value=""/>
             <econditions combine="or">
                 <econdition entity-alias="OI" field-name="quantity" operator="greater" to-entity-alias="OI" to-field-name="cancelQuantity"/>
                 <econdition entity-alias="OI" field-name="cancelQuantity" operator="equals" value=""/>
@@ -1087,7 +1087,7 @@ under the License.
             <!-- Here we are preparing the Shipment Item for eligible Order that are not sent to the external system.
              So we need to add the below condition same as FulfilledOrderItemsSyncQueue view. -->
             <!--            <econdition entity-alias="SOV" field-name="roleTypeId" operator="equals" value="BILL_TO_CUSTOMER"/>-->
-            <!--            <econdition entity-alias="OFH" field-name="orderId" operator="equals" value=""/>-->
+            <econdition entity-alias="OFH" field-name="orderId" operator="equals" value=""/>
             <econditions combine="or">
                 <econdition entity-alias="OI" field-name="quantity" operator="greater" to-entity-alias="OI" to-field-name="cancelQuantity"/>
                 <econdition entity-alias="OI" field-name="cancelQuantity" operator="equals" value=""/>
