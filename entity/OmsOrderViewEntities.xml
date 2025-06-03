@@ -950,6 +950,13 @@ under the License.
             <key-map field-name="orderId"/>
             <key-map field-name="orderItemSeqId"/>
         </member-entity>
+        <member-entity entity-alias="GID" entity-name="org.apache.ofbiz.product.product.GoodIdentification" join-from-alias="OI" join-optional="true">
+            <key-map field-name="productId"/>
+            <entity-condition>
+                <econdition field-name="goodIdentificationTypeId" value="UPCA"/>
+                <date-filter/>
+            </entity-condition>
+        </member-entity>
         <alias entity-alias="OI" name="orderId"/>
         <alias entity-alias="OI" name="orderItemSeqId"/>
         <alias entity-alias="OI" field="statusId" name="orderItemStatus"/>
@@ -958,6 +965,7 @@ under the License.
         <alias entity-alias="OI" field="externalId" name="orderItemExternalId"/>
         <alias entity-alias="OI" name="orderItemTypeId"/>
         <alias entity-alias="OI" name="cancelQuantity"/>
+        <alias entity-alias="GID" field="idValue" name="upca"/>
         <alias-all entity-alias="RI">
             <exclude field="statusId"/>
             <exclude field="productId"/>
